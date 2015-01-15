@@ -1,0 +1,86 @@
+<!--
+Japan Tsunami Project
+Map generated with Leaflet
+Last modified : 15/01/2015
+-->
+<html>
+<head>
+<title>Japan Tsunami Map</title>
+<link rel="stylesheet" href="./leaflet-0.7.3/leaflet.css" />
+</head>
+<script src="./leaflet-0.7.3/leaflet.js"></script>
+
+<style>
+#map { height: 650px; }
+</style>
+
+<body>
+ <div id="map"></div>
+</body>
+
+<script>
+markers = [
+   {
+     "name": "Tokyo",
+	 "population": "9 128 090",
+     "url": "http://en.wikipedia.org/wiki/Tokyo",
+     "lat": 35.732727,
+     "lng": 139.722404
+   },
+   {
+     "name": "Yokohama",
+     "population": "3 709 777",
+	 "url": "http://en.wikipedia.org/wiki/Yokohama",
+     "lat": 35.462635,
+     "lng": 139.774854
+   },
+   {
+     "name": "Osaka",
+	 "population": "2 685 218",
+     "url": "http://en.wikipedia.org/wiki/Osaka",
+     "lat": 34.705359,
+     "lng": 135.500729
+   },
+   {
+     "name": "Nagoya",
+	 "population": "2 275 428",
+     "url": "http://en.wikipedia.org/wiki/Nagoya",
+     "lat": 35.193866,
+     "lng": 136.907394
+   },
+   {
+     "name": "Sapporo",
+	 "population": "1 919 684",
+     "url": "http://en.wikipedia.org/wiki/Sapporo",
+     "lat": 43.179025,
+     "lng": 141.388028
+   }
+];
+
+var map = L.map('map').setView([37.4900318, 136.4664008], 6);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map);
+
+for ( var i=0; i < markers.length; ++i ) 
+{
+   L.marker( [markers[i].lat, markers[i].lng] )
+      .bindPopup( '<center><a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a></center>' + '<div>Population: ' + markers[i].population + '</div>')
+      .addTo( map );
+}
+
+L.circle([38.287699, 143.266938], 500000, {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([38.287699, 143.266938], 500, {
+    color: 'white',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+
+</script>
+
+</html>
