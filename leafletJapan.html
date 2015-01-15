@@ -19,6 +19,14 @@ Last modified : 15/01/2015
 </body>
 
 <script>
+//Japan's map
+var map = L.map('map').setView([37.4900318, 136.4664008], 6);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+}).addTo(map);
+
+//Cities markers
 markers = [
    {
      "name": "Tokyo",
@@ -57,12 +65,6 @@ markers = [
    }
 ];
 
-var map = L.map('map').setView([37.4900318, 136.4664008], 6);
-
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18
-}).addTo(map);
-
 for ( var i=0; i < markers.length; ++i ) 
 {
    L.marker( [markers[i].lat, markers[i].lng] )
@@ -70,6 +72,7 @@ for ( var i=0; i < markers.length; ++i )
       .addTo( map );
 }
 
+//Tsunami circle
 L.circle([38.287699, 143.266938], 500000, {
     color: 'red',
     fillColor: '#f03',
@@ -77,6 +80,43 @@ L.circle([38.287699, 143.266938], 500000, {
 }).addTo(map);
 L.circle([38.287699, 143.266938], 500, {
     color: 'white',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+
+//People circle
+L.circle([35.462635,139.774854], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([34.705359, 135.500729], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([35.732727,139.722404], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([35.557485,139.698357], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([34.705359,135.500729], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([35.193866,136.907394], 500, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+L.circle([35.462635,139.774854], 500, {
+    color: 'green',
     fillColor: '#fff',
     fillOpacity: 0.5
 }).addTo(map);
