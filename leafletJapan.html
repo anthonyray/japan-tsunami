@@ -26,6 +26,8 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18
 }).addTo(map);
 
+L.control.scale().addTo(map);
+
 //Cities markers
 markers = [
    {
@@ -73,16 +75,42 @@ for ( var i=0; i < markers.length; ++i )
 }
 
 //Tsunami circle
-L.circle([38.287699, 143.266938], 500000, {
+L.circle([34.204902, 137.411225], 400000, {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.5
 }).addTo(map);
-L.circle([38.287699, 143.266938], 500, {
+L.circle([34.204902, 137.411225], 500, {
     color: 'white',
     fillColor: '#fff',
     fillOpacity: 0.5
 }).addTo(map);
+
+//-------------------------------------------------
+
+//alert(inCircle(34.204902,137.411225,500000,35.462635, 139.774854));
+
+if(inCircle(34.204902,137.411225,500000,35.462635, 139.774854)){
+	L.circle([35.462635, 139.774854], 50000, {
+    color: 'blue',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+}
+else{
+	L.circle([35.462635, 139.774854], 50000, {
+    color: 'green',
+    fillColor: '#fff',
+    fillOpacity: 0.5
+}).addTo(map);
+}
+
+map.on('click', function(e) {
+    //alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+});
+
+
+//-------------------------------------------------
 
 //People circle
 L.circle([35.462635,139.774854], 500, {
@@ -121,6 +149,20 @@ L.circle([35.462635,139.774854], 500, {
     fillOpacity: 0.5
 }).addTo(map);
 
+//L.marker([35.462635,139.774854]).addTo(map).on('mouseover', onClick);
+/*function onClick(e) {
+    alert(this.getLatLng());
+}*/ 
+function inCircle(latCenterCircle,lonCenterCircle,rad,lat,lon){
+	rad = rad / 1.6;
+	var dis = L.latLng([latCenterCircle, lonCenterCircle]).distanceTo([lat, lon]);
+	if(dis<=rad){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 </script>
 
 </html>
