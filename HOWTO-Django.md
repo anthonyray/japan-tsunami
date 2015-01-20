@@ -84,20 +84,46 @@ def japan_map(request):
 ---
 ### 1.6 Manage urls
 You have __two__ kind of urls.py files: the __urls.py of your project__, will redirect url requests to __urls.py of your apps__, witch you have to build.
-For example let's say we want "http://localhost:8000/ms_bgd_project/japan_map" to show our view of the japan map witch correspond
-```python
-from django.conf.urls import patterns, url
+For example let's say we want "http://localhost:8000/japan_tsunami" to show our view of the japan map witch correspond
 
+```python
+#in ms_bgd_project/urls.py
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+
+
+urlpatterns = patterns('',
+
+url(r'^japan_tsunami', include('japan_map.urls')),
+)
+```
+will redirect to japan_map/urls.py (to create) that will run the wished view.
+```python
+#in japan_map/urls.py
+from django.conf.urls import patterns, url
 from japan_map import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.japan_map, name='japan_map'),
+url(r'^$', views.japan_map, name='japan_map'),
 )
+```
+
+---
+### 1.7 Templates
+Templates that contains HTML/CSS/JS files will be in the japan_map folder. Create those folders:
+```
+mysite/
+  japan_map/
+    templates/
+      html
+      css
+      js
+      images
 ```
 
 
 ---
-### 1.7 Sockets
+### 1.8 Sockets
 
 
 
