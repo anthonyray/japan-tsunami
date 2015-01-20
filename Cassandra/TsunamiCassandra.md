@@ -2,6 +2,6 @@
 ## Tools
 - Cassandra  
 - Leaflet
-- Flask
-## Cassandra design
-## Visualization
+- Flask  
+## Cassandra design  
+## Visualization  
