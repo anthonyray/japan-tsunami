@@ -21,16 +21,23 @@ tmpl_dir = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__, template_folder=tmpl_dir)
 
+datinf=datetime(2015, 1, 5, 10, 32)
+datsup=datetime(2015, 1, 25, 10, 32)
+lat_tsunami = 34.241238
+lon_tsunami = 137.433197
+rad = 500
+datas = ca.alertPhones(datinf,datsup,lat_tsunami,lon_tsunami,rad)
+
 @app.route('/')
 def index():
     script="./static/leaflet-0.7.3/leaflet.js"
     css="./static/leaflet-0.7.3/leaflet.css"
     title = "Japan Tsunami Map"
-    datinf=datetime(2014, 12, 24, 10, 32)
-    datsup=datetime(2015, 1, 5, 10, 32)
-    lat_tsunami = 34.241238
-    lon_tsunami = 137.433197
-    datas = ca.alertPhones(datinf,datsup,lat_tsunami,lon_tsunami,500)
+#    datinf=datetime(2014, 12, 24, 10, 32)
+#    datsup=datetime(2015, 1, 5, 10, 32)
+#    lat_tsunami = 34.241238
+#    lon_tsunami = 137.433197
+    #datas = ca.alertPhones(datinf,datsup,lat_tsunami,lon_tsunami,500)
     return render_template('flask1.html',title=title,script=script,css=css,datas=datas,latTsunami=lat_tsunami,lonTsunami=lon_tsunami)
 
 app.run()

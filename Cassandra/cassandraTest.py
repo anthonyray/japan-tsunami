@@ -53,7 +53,16 @@ def haversine(lon1, lat1, lon2, lat2):
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a)) 
     km = 6367 * c  # 6367 km is the radius of the Earth
-    return km 
+    return km   
+
+'''
+'''
+def boundingBox(d,lat,lon):
+     lat1sup = lat + (d*3.531426/500)
+     lon1sup = lon + (d*3.531426/500)
+     lat1inf = lat - (d*3.531426/500)
+     lon1inf = lon - (d*3.531426/500)     
+     return lat1inf,lat1sup,lon1inf,lon1sup
 
 '''
 Tell if a date is in a range of 2 dates
@@ -71,7 +80,8 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     cluster = Cluster()
     session = cluster.connect(keyspace)
     session.default_fetch_size = request_size
-    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+";")   
+    box = boundingBox(radius,lon,lat)
+    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where token(timestamp,latitude,longitude)>=token('"+str(dat_inf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(dat_sup)+"',"+str(box[1])+","+str(box[3])+");")   
     phonelist = list()
     for i in range(0,len(res_coor)):
         lat2 = res_coor[i][0]
@@ -81,9 +91,17 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
         if(haversine(lon,lat,lon2,lat2)<=radius and timestampInterval(date,dat_inf,dat_sup)):
             phonelist.append((lat2,lon2,date,phone))
     return phonelist
-    
+
+#cluster = Cluster()
+#session = cluster.connect('japantsunami')
+#session.default_fetch_size = 20000
+#datinf=datetime(2015, 1, 5, 10, 32)
+#datsup=datetime(2015, 1, 10, 10, 32)
+#suplat = 36.05522918701172 + 3.531426
+#suplon =  140.06179809570312 + 3.531426
+#testhaversineinverse = haversine(suplon,suplat,140.06179809570312,36.05522918701172)
+#box = boundingBox(500,140.06179809570312,36.05522918701172)
+#plop = session.execute("select latitude,longitude,timestamp,phone from bigtable4 where token(timestamp,latitude,longitude)>=token('"+str(datinf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(datsup)+"',"+str(box[1])+","+str(box[3])+");")
 #data =  pd.read_csv('datajapan.csv',sep=';',names=['timestamp','codegsm','latitude','longitude','phone'])
-#datinf=datetime(2013, 12, 24, 10, 32)
-#datsup=datetime(2015, 1, 5, 10, 32)
 #res = alertPhones(datinf,datsup,34.241238,137.433197,500)
 
