@@ -56,6 +56,8 @@ def haversine(lon1, lat1, lon2, lat2):
     return km   
 
 '''
+Square box around coordinates given distance
+d : distance (in km)
 '''
 def boundingBox(d,lat,lon):
      lat1sup = lat + (d*3.531426/500)
