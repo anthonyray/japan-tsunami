@@ -4,7 +4,8 @@ The project aims to build a tsunami warning system with SMS for japanese people 
 ## Tools
 - [Cassandra](http://cassandra.apache.org/) : Database column oriented with high scalability and high availability without compromising performance.
 - [Leaflet](http://leafletjs.com/) : Javascript library to build interactive maps.
-- [Flask](http://flask.pocoo.org/) ::Tiny python framework to build web applications. 
+- [Flask](http://flask.pocoo.org/) ::Tiny python framework to build web applications.  
+
 ## Cassandra design
 <table>
 <thead>
@@ -42,6 +43,7 @@ The project aims to build a tsunami warning system with SMS for japanese people 
 </tr>
 </tbody>
 </table>  
+
 ## Visualization  
 <table>
 <thead>
