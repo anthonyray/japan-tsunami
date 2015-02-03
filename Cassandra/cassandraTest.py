@@ -21,7 +21,7 @@ from cassandra.cluster import Cluster
 Create a special table into Cassandra database
 '''
 def createTableCassandra(session,table=""):    
-    session.execute("CREATE TABLE "+table+"(timestamp timestamp, latitude float, longitude float, codegsm text, phone text, PRIMARY KEY((timestamp,latitude,longitude)));") 
+    session.execute("CREATE TABLE "+table+"(timestamp timestamp, codegsm text, latitude float, longitude float, phone text, PRIMARY KEY((timestamp,latitude,longitude)));") 
     print "Table "+table+" created !";
   
 '''
@@ -94,8 +94,48 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
             phonelist.append((lat2,lon2,date,phone))
     return phonelist
 
+'''
+Convert CSV file into dataframe
+'''
+def fromCSVtoDataframe(csvfile=''):
+    data =  pd.read_csv(csvfile,sep=';',names=['timestamp','codegsm','latitude','longitude','phone'])   
+    data['timestamp'] = data['timestamp'].apply(lambda x: x.split(',')[0])
+    return data
+
+def multipleInsertCreation(data,table="bigtable"):
+    begin = "BEGIN BATCH \n "
+    end = " APPLY BATCH;"
+    cmd = ""
+    for i in range(0,len(data.index)-1):
+        timestamp = data.iloc[i][0]
+        codegsm = data.iloc[i][1]
+        latitude = data.iloc[i][2]
+        longitude = data.iloc[i][3]
+        phone = data.iloc[i][4]    
+        temp = "insert into "+table+"(timestamp,latitude,longitude,codegsm,phone) VALUES('"+str(timestamp)+"',"+str(latitude)+","+str(longitude)+",'"+str(codegsm)+"','"+str(phone)+"')"
+        cmd = cmd + " " + temp + " \n " 
+        print i
+    return begin + cmd + end
+
+def multipleInsertExec(keyspace="",cmd=""):
+    cluster = Cluster()
+    session = cluster.connect(keyspace)   
+    session.execute(cmd)
+
+#####################################################################
+
+#test = multipleInsert(data=datacsv,table="bigtable9")
+
+#datacsv = fromCSVtoDataframe('datajapan.csv')
+
 #cluster = Cluster()
 #session = cluster.connect('japantsunami')
+
+#○createTableCassandra(session,"bigtable9")
+#sfillTable(session,datacsv,"bigtable8")
+
+#multipleInsertExec(keyspace='japantsunami',cmd=test)
+
 #session.default_fetch_size = 20000
 #datinf=datetime(2015, 1, 5, 10, 32)
 #datsup=datetime(2015, 1, 10, 10, 32)
