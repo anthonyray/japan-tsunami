@@ -1,0 +1,149 @@
+<!--
+------------------------------------------------
+--- Japan Tsunami Project
+--- Web vizualization using Flask and Leaflet
+@author : Paco
+Last Modification : 2015/01/21
+------------------------------------------------
+-->
+{% load dajaxice_templatetags %}
+{% load staticfiles %}
+
+<html>
+<head>
+	<title>{{title}}</title>
+	<!--link rel="stylesheet" href="./leaflet-0.7.3/leaflet.css" /-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link rel="stylesheet" href="{% static "japan_map/japan_map.css" %}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	{% dajaxice_js_import %}
+	<script src="{% static "japan_map/japan_map.js" %} "></script>
+	
+</head>
+<!--script src="./leaflet-0.7.3/leaflet.js"></script-->
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<style>
+	#map { height: 1000px; }
+</style>
+<body>
+	<div class="row">
+		<div class="col-md-8">
+			<div id="map">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<h1 class="text-center">Japan Tsunami</h1>
+			<div class="span6"></div>
+			<form action="." id="my_form" method="post">
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="longitude">Longitude</label>
+							<input type="longitude" class="form-control" name="longitude" placeholder="140.4664008">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="latitude">Latitude</label>
+							<input type="latitude" class="form-control" name="latitude" placeholder="36.0900318">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="date_eq">Date</label>
+							<input type="date_eq" class="form-control" name="date_eq" placeholder="YYYY-MM-DD hh:mm:ss.fff">
+						</div>
+					</div>
+				</div>
+				<button type="submit" onclick="Dajaxice.japan_map.sayhello(my_js_callback);" class="btn btn-default">Make earthquake happen!</button>
+			</form>
+			<div class="row">
+				<h3 class="text-center">Date:</h3>
+				<h3 id="time" class="text-center"><font color="red">13 Avril 2014 | 20:30:24</font></h3>
+				<h3 class="text-center">Total number of people called:</h3>
+				<h3 id="nb_people" class="text-center"><font color="blue">13 978</font></h3>
+			</div>
+			
+		</div>
+	</div>
+	
+</body>
+<script>
+//Japan's map
+var map = L.map('map').setView([36.0900318, 140.4664008], 6);
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 18
+}).addTo(map);
+L.control.scale().addTo(map);
+//Cities markers
+markers = [
+{% for city in japancities %}
+{
+	"name": "{{ city.0 }}",
+	"population": "{{ city.1 }}",
+	"url": "{{ city.2 }}",
+	"lat": {{ city.3 }},
+	"lng": {{ city.4 }}
+},
+{% endfor %}
+{
+	"name": "",
+	"population": "",
+	"url": "",
+	"lat": 0.0,
+	"lng": 0.0
+}
+];
+for ( var i=0; i < markers.length; ++i )
+{
+	L.marker( [markers[i].lat, markers[i].lng] )
+	.bindPopup( '<center><a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a></center>' + '<div>Population: ' + markers[i].population + '</div>')
+	.addTo( map );
+}
+//Tsunami circle
+L.circle([{{ latTsunami }}, {{ lonTsunami }}], 400000, {
+	color: 'red',
+	fillColor: '#f03',
+	fillOpacity: 0.1
+}).addTo(map);
+L.circle([{{ latTsunami }}, {{ lonTsunami }}], 500, {
+	color: 'red',
+	fillColor: '#fff',
+	fillOpacity: 0.8
+}).addTo(map);
+//-------------------------------------------------
+//alert(inCircle(34.204902,137.411225,500000,35.462635, 139.774854));
+map.on('click', function(e) {
+//alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+});
+//-------------------------------------------------
+//People circle
+{% for data in datas %}
+L.circle([{{ data.0 }},{{ data.1 }}], 500, {
+	color: 'green',
+	fillColor: '#fff',
+	fillOpacity: 0.5
+}).addTo(map);
+{% endfor %}
+//L.marker([35.462635,139.774854]).addTo(map).on('mouseover', onClick);
+/*function onClick(e) {
+alert(this.getLatLng());
+}*/
+function inCircle(latCenterCircle,lonCenterCircle,rad,lat,lon){
+	rad = rad / 1.6;
+	var dis = L.latLng([latCenterCircle, lonCenterCircle]).distanceTo([lat, lon]);
+	if(dis<=rad){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+</script>
+</html>
