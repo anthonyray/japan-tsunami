@@ -1,5 +1,5 @@
 # Japan Tsunami alert (Cassandra version)
-The project aims to build a tsunami warning system with SMS for japanese people following an earthquake. People in threatened areas have to be warned as soon as possible. 
+The project aims to build a tsunami warning system with SMS for japanese people following an earthquake. People in threatened areas have to be warned as soon as possible.
 
 ## Tools
 - [Cassandra](http://cassandra.apache.org/) : Database column oriented with high scalability and high availability without compromising performance.
@@ -44,6 +44,23 @@ The project aims to build a tsunami warning system with SMS for japanese people 
 </tbody>
 </table>  
 
+## Setup Cassandra
+First install Cassandra, for Debian based: http://www.datastax.com/documentation/cassandra/2.0/cassandra/install/installDeb_t.html
+
+Create a key space:
+```
+$cd install_folder
+$desc kespaces;
+$cqlsh
+```
+Follow this doc: http://www.datastax.com/documentation/cql/3.0/cql/cql_reference/create_keyspace_r.html
+```
+cqlsh> CREATE KEYSPACE japan_tsunami
+... WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 5};
+
+
+```
+
 ## Visualization  
 <table>
 <thead>
@@ -66,5 +83,5 @@ The project aims to build a tsunami warning system with SMS for japanese people 
 	<td>One city</td>
 </tr>
 </tbody>
-</table> 
+</table>
 ![screen1Japan](pictures/screen1Japan.png)  
