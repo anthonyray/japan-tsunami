@@ -1,0 +1,85 @@
+<html>
+<head>
+	<title>{{title}}</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script-->
+	<script>
+		window.cities = [
+		  {% for city in japancities %}
+		  {
+		    "name": "{{ city[0] }}",
+		    "population": "{{ city[1] }}",
+		    "url": "{{ city[2] }}",
+		    "lat": {{ city[3] }},
+		    "lng": {{ city[4] }}
+		  },
+		  {% endfor %}
+		  {
+		    "name": "",
+		    "population": "",
+		    "url": "",
+		    "lat": 0.0,
+		    "lng": 0.0
+		  }
+  	];
+	</script>
+</head>
+<style>
+	#map { height: 1000px; }
+</style>
+
+<body>
+	<div class="row">
+		<div class="col-xs-8">
+			<div id="map">
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<h1 class="text-center">Japan Tsunami</h1>
+			<br/>
+			<div id="my_form">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label for="longitude">Longitude</label>
+							<input id="tsunami_lon" type="longitude" class="form-control" name="longitude" placeholder="140.4664008">
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label for="latitude">Latitude</label>
+							<input id="tsunami_lat" type="latitude" class="form-control" name="latitude" placeholder="36.0900318">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="form-group">
+							<label for="date_eq">Date</label>
+							<input id="tsunami_date" type="date_eq" class="form-control" name="date_eq" placeholder="YYYY-MM-DD hh:mm:ss">
+						</div>
+					</div>
+				</div>
+				<button id="tsunami_submit" class="btn btn-default">Make earthquake happen!</button>
+			</div>
+			<div class="row">
+				<h3 class="text-center">Date:</h3>
+				<h3 class="text-center"><font color="red" id="time">13 Avril 2014 | 20:30:24</font></h3>
+				<h3 class="text-center">Total number of people called:</h3>
+				<h3 class="text-center"><font color="blue" id="nb_people">13 978</font></h3>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+<script src="static/js/main.js"></script>
+
+</html>
