@@ -20,6 +20,13 @@ from cassandra.cluster import Cluster
 '''
 Create a special table into Cassandra database
 '''
+def createKeyspaceCassandra(session,keyspace="",replication=5):    
+    session.execute("CREATE KEYSPACE WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : "+str(replication)+" };") 
+    print "Keyspace "+keyspace+" created !";
+
+'''
+Create a special table into Cassandra database
+'''
 def createTableCassandra(session,table=""):    
     session.execute("CREATE TABLE "+table+"(timestamp timestamp, codegsm text, latitude float, longitude float, phone text, PRIMARY KEY((timestamp,latitude,longitude)));") 
     print "Table "+table+" created !";
@@ -122,17 +129,31 @@ def multipleInsertExec(keyspace="",cmd=""):
     session = cluster.connect(keyspace)   
     session.execute(cmd)
 
+
 #####################################################################
+
+offset = 10000
+for i in range(0,1000):
+    if(i == 0):
+        test = multipleInsertCreation(data=datacsv[0:offset],table="bigtable11")
+        multipleInsertExec(keyspace="japantsunami",cmd=test)
+        print "-------------------------------------------------"
+    else:
+        u = i*offset
+        uu = u + offset
+        test = multipleInsertCreation(data=datacsv[u:uu],table="bigtable11")
+        multipleInsertExec(keyspace="japantsunami",cmd=test)
+        print "-------------------------------------------------"
 
 #test = multipleInsert(data=datacsv,table="bigtable9")
 
-#datacsv = fromCSVtoDataframe('datajapan.csv')
+#datacsv = fromCSVtoDataframe('data_tsunami.csv')
 
 #cluster = Cluster()
 #session = cluster.connect('japantsunami')
+#createTableCassandra(session,"bigtable11")
 
-#○createTableCassandra(session,"bigtable9")
-#sfillTable(session,datacsv,"bigtable8")
+#fillTable(session,datacsv,"bigtable8")
 
 #multipleInsertExec(keyspace='japantsunami',cmd=test)
 
