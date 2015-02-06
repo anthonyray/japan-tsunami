@@ -21,7 +21,7 @@ from cassandra.cluster import Cluster
 Create a special table into Cassandra database
 '''
 def createKeyspaceCassandra(session,keyspace="",replication=5):    
-    session.execute("CREATE KEYSPACE WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : "+str(replication)+" };") 
+    session.execute("CREATE KEYSPACE "+keyspace+" WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : "+str(replication)+" };") 
     print "Keyspace "+keyspace+" created !";
 
 '''
@@ -131,19 +131,23 @@ def multipleInsertExec(keyspace="",cmd=""):
 
 
 #####################################################################
+#
+#cluster = Cluster()
+#session = cluster.connect()
+#createKeyspaceCassandra(session,keyspace='japtsu')
 
-offset = 10000
-for i in range(0,1000):
-    if(i == 0):
-        test = multipleInsertCreation(data=datacsv[0:offset],table="bigtable11")
-        multipleInsertExec(keyspace="japantsunami",cmd=test)
-        print "-------------------------------------------------"
-    else:
-        u = i*offset
-        uu = u + offset
-        test = multipleInsertCreation(data=datacsv[u:uu],table="bigtable11")
-        multipleInsertExec(keyspace="japantsunami",cmd=test)
-        print "-------------------------------------------------"
+#offset = 10000
+#for i in range(0,1000):
+#    if(i == 0):
+#        test = multipleInsertCreation(data=datacsv[0:offset],table="bigtable11")
+#        multipleInsertExec(keyspace="japantsunami",cmd=test)
+#        print "-------------------------------------------------"
+#    else:
+#        u = i*offset
+#        uu = u + offset
+#        test = multipleInsertCreation(data=datacsv[u:uu],table="bigtable11")
+#        multipleInsertExec(keyspace="japantsunami",cmd=test)
+#        print "-------------------------------------------------"
 
 #test = multipleInsert(data=datacsv,table="bigtable9")
 
