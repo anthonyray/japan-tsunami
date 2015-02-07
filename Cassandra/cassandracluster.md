@@ -163,6 +163,12 @@ s3cmd get s3://bigdata-paristech/projet2014/data/data_1MB.csv data_1MB.csv
 ```  
 
 ## Launch the process
+Install the blist library (optimization)
+
+````
+sudo pip install blist
+````
+
 You have to launch the shell process called 'process.sh'. For example : 
 ```
 sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
