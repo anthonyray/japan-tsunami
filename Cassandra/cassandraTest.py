@@ -125,12 +125,34 @@ def multipleInsertCreation(data,table="bigtable"):
         print i
     return begin + cmd + end
 
+def multipleInsertCreation2(data,table="bigtable"):
+    begin = "BEGIN BATCH \n "
+    end = " APPLY BATCH;"
+    cmd = ""
+    for i in range(0,len(data)-1):
+        timestamp = data[i][2]
+        phone = data[i][3]
+        latitude = data[i][0]
+        longitude = data[i][1]
+        temp = "insert into "+table+"(timestamp,latitude,longitude,phone) VALUES('"+str(timestamp)+"',"+str(latitude)+","+str(longitude)+",'"+str(phone)+"')"
+        cmd = cmd + " " + temp + " \n "
+        print i
+    return begin + cmd + end
+
+
 def multipleInsertExec(keyspace="",cmd=""):
     cluster = Cluster()
     session = cluster.connect(keyspace)   
     session.execute(cmd)
 
 #####################################################################
+
+yop = list((12,11,'yop','po'))
+yop.append((13,1313,'fsf','gdg'))
+yop.append((4648,456,'gfdg','ff'))
+
+print yop[0:1]
+
 '''
 cluster = Cluster()
 session = cluster.connect()

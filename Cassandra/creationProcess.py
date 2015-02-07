@@ -28,6 +28,7 @@ ca.createKeyspaceCassandra(session,keyspace=crea_keyspace)
 
 session = cluster.connect(crea_keyspace)
 ca.createTableCassandra(session,table=crea_table)
+ca.createTableCassandra(session,table=str(crea_table+'bis'))
 
 '''
 datacsv = ca.fromCSVtoDataframe(crea_file)
