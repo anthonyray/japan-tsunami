@@ -163,6 +163,103 @@ s3cmd get s3://bigdata-paristech/projet2014/data/data_1MB.csv data_1MB.csv
 ```  
 
 ## Launch the process
+You have to launch the shell process called 'process.sh'. For example : 
 ```
 sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
+```  
+<table>
+<thead>
+<tr>
+	<th>Argument</th>
+	<th>Description</th>
+	<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>Cassandra keyspace</td>
+	<td>'japantest'</td>
+</tr>
+<tr>
+	<td> 2 </td>
+	<td> Cassandra table </td>
+	<td> 'bigtable' </td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td> Data file </td>
+	<td> 'data_1GB.csv' </td>
+</tr>
+<tr>
+	<td> 4 </td>
+	<td> Offset </td>
+	<td> 1000 </td>
+</tr>
+<tr>
+	<td> 5 </td>
+	<td> Loop argu </td>
+	<td> 1000 </td>
+</tr>
+</tbody>
+</table> 
+
+# Alert phones process
 ```
+python sushiProcess.py 'japjapo' 'bigtablebis' 1000 1000 36.055 140.061 2015-01-05-10-32 2015-01-10-10-30 500
+```  
+<table>
+<thead>
+<tr>
+	<th>Argument</th>
+	<th>Description</th>
+	<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td>1</td>
+	<td>Cassandra keyspace</td>
+	<td>'japantest'</td>
+</tr>
+<tr>
+	<td> 2 </td>
+	<td> Cassandra table </td>
+	<td> 'bigtable' </td>
+</tr>
+<tr>
+	<td> 3 </td>
+	<td> Offset </td>
+	<td> 1000 </td>
+</tr>
+<tr>
+	<td> 4 </td>
+	<td> Loop argu </td>
+	<td> 1000 </td>
+</tr>
+<tr>
+	<td> 5 </td>
+	<td> Tsunami latitude </td>
+	<td> 36.055 </td>
+</tr><tr>
+	<td> 6 </td>
+	<td> Tsunami longitude </td>
+	<td> 140.061 </td>
+</tr>
+<tr>
+	<td> 7 </td>
+	<td> Range date inferior (y-m-d-h-m)</td>
+	<td> 2015-01-05-10-32 </td>
+</tr>
+<tr>
+	<td> 8 </td>
+	<td> Range date superior (y-m-d-h-m)</td>
+	<td> 2015-01-10-10-30 </td>
+</tr>
+<tr>
+	<td> 9 </td>
+	<td> Tsunami Radius (in km)</td>
+	<td> 500 </td>
+</tr>
+</tbody>
+</table>   
