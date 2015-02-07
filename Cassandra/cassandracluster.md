@@ -133,13 +133,19 @@ Nb : if agents have not automatically been connected, click the Fix link located
 # Python configuration
 ## Packages installation
 ```
-pip install pandas
-pip install datetime
-pip install math
-pip install cassandra-driver
+sudo apt-get install python-setuptools python-dev build-essential python-pip  
+sudo pip install --upgrade virtualenv  
+pip install --upgrade setuptools  
+sudo pip install datetime
+sudo pip install math  
+sudo pip install cassandra-driver  
+sudo pip install pandas
+sudo apt-get install git
 ```  
-## script installation
-TODO
+## Scripts installation
+```
+git clone https://github.com/anthonyray/japan-tsunami.git
+```
 
 # Import data into the cluster
 ## From S3
@@ -156,11 +162,7 @@ Then connect to the node 0 with ssh and type the following command :
 s3cmd get s3://bigdata-paristech/projet2014/data/data_1MB.csv data_1MB.csv
 ```  
 
-## Clean data with python script
-TODO
-## Create keyspace and tables into cassandra
-TODO
-## Import data into table
-TODO
-## Test data
-TODO
+## Launch the process
+```
+sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
+```
