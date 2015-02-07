@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 20 16:17:43 2015
+#!/usr/bin/env python
 
+"""
+reated on Tue Jan 20 16:17:43 2015
 @author: Paco
 """
-
 """
 ------------------------------------------------
 --- Japan Tsunami Project
@@ -16,6 +15,10 @@ import pandas as pd
 from datetime import datetime
 from math import radians, cos, sin, asin, sqrt
 from cassandra.cluster import Cluster
+
+def createKeyspaceCassandra(session,keyspace=""):
+    session.execute("CREATE KEYSPACE "+keyspace+" WITH REPLICATION = {'class':'SimpleStrategy', 'replication_factor' : 5};")
+    print "Keyspace "+keyspace+" created !";
 
 '''
 Create a special table into Cassandra database
@@ -81,17 +84,22 @@ Get people datas to prevent from the tsunami
 def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtable4",keyspace="japantsunami"):
     cluster = Cluster()
     session = cluster.connect(keyspace)
+    print "Connexion Ok"
     session.default_fetch_size = request_size
+    print "size ok"
     box = boundingBox(radius,lon,lat)
+    print "box ok"
     res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where token(timestamp,latitude,longitude)>=token('"+str(dat_inf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(dat_sup)+"',"+str(box[1])+","+str(box[3])+");")   
+    print "Session ok"
     phonelist = list()
     for i in range(0,len(res_coor)):
-        lat2 = res_coor[i][0]
+	lat2 = res_coor[i][0]
         lon2 = res_coor[i][1]
         date = res_coor[i][2]    
         phone = str(res_coor[i][3]).split('.')[0]     
         if(haversine(lon,lat,lon2,lat2)<=radius and timestampInterval(date,dat_inf,dat_sup)):
             phonelist.append((lat2,lon2,date,phone))
+    print phonelist[1]
     return phonelist
 
 '''
@@ -123,27 +131,28 @@ def multipleInsertExec(keyspace="",cmd=""):
     session.execute(cmd)
 
 #####################################################################
+'''
+cluster = Cluster()
+session = cluster.connect()
+createKeyspaceCassandra(session,keyspace="japtest2")
 
-#test = multipleInsert(data=datacsv,table="bigtable9")
+session = cluster.connect('japtest2')
+createTableCassandra(session,table='bigtable')
 
-#datacsv = fromCSVtoDataframe('datajapan.csv')
-
-#cluster = Cluster()
-#session = cluster.connect('japantsunami')
-
-#○createTableCassandra(session,"bigtable9")
-#sfillTable(session,datacsv,"bigtable8")
-
-#multipleInsertExec(keyspace='japantsunami',cmd=test)
-
-#session.default_fetch_size = 20000
-#datinf=datetime(2015, 1, 5, 10, 32)
-#datsup=datetime(2015, 1, 10, 10, 32)
-#suplat = 36.05522918701172 + 3.531426
-#suplon =  140.06179809570312 + 3.531426
-#testhaversineinverse = haversine(suplon,suplat,140.06179809570312,36.05522918701172)
-#box = boundingBox(500,140.06179809570312,36.05522918701172)
-#plop = session.execute("select latitude,longitude,timestamp,phone from bigtable4 where token(timestamp,latitude,longitude)>=token('"+str(datinf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(datsup)+"',"+str(box[1])+","+str(box[3])+");")
-#data =  pd.read_csv('datajapan.csv',sep=';',names=['timestamp','codegsm','latitude','longitude','phone'])
-#res = alertPhones(datinf,datsup,34.241238,137.433197,500)
+datacsv = fromCSVtoDataframe('data1MB.csv')
+#insertion = multipleInsertCreation(datas,table='bigtable')
+#multipleInsertExec(keyspace='japtest2',cmd=insertion)
+offset = 1000
+for i in range(0,100):
+    if(i == 0):
+        test = multipleInsertCreation(data=datacsv[0:offset],table="bigtable")
+        multipleInsertExec(keyspace="japtest2",cmd=test)
+        print "-------------------------------------------------"
+    else:
+        u = i*offset
+        uu = u + offset
+        test = multipleInsertCreation(data=datacsv[u:uu],table="bigtable")
+        multipleInsertExec(keyspace="japtest2",cmd=test)
+        print "-------------------------------------------------"
+'''
 
