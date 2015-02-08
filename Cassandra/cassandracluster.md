@@ -212,7 +212,7 @@ sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
 
 # Alert phones process
 ```
-python sushiProcess.py 'japjapo' 'bigtablebis' 1000 1000 36.055 140.061 2015-01-05-10-32 2015-01-10-10-30 500
+python sushiProcess.py 'japjapo' 'bigtable' 1000 1000 36.055 140.061 2015-01-05-10-32 2015-01-10-10-30 500
 ```  
 <table>
 <thead>
