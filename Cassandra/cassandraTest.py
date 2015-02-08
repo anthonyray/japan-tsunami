@@ -84,11 +84,12 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     cluster = Cluster()
     session = cluster.connect(keyspace)
     print "Connexion Ok"
+    session.default_timeout = 60
     session.default_fetch_size = request_size
     print "size ok"
     box = boundingBox(radius,lon,lat)
     print "box ok"
-    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where token(timestamp,latitude,longitude)>=token('"+str(dat_inf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(dat_sup)+"',"+str(box[1])+","+str(box[3])+");")
+    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where token(timestamp,latitude,longitude)>=token('"+str(dat_inf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(dat_sup)+"',"+str(box[1])+","+str(box[3])+") ALLOW FILTERING;")
     print "Session ok"
     phonelist = list()
     for i in range(0,len(res_coor)):
