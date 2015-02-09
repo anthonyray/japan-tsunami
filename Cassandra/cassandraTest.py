@@ -58,6 +58,7 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     phonelist = list()
     for i in range(0,len(res_coor)):
 	lat2 = res_coor[i][0]
+	print lat2
         lon2 = res_coor[i][1]
         date = res_coor[i]
         phone = str(res_coor[i][3]).split('.')[0]
