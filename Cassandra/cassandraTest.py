@@ -24,7 +24,7 @@ def createKeyspaceCassandra(session,keyspace=""):
 Create a special table into Cassandra database
 '''
 def createTableCassandra(session,table=""):
-    session.execute("CREATE TABLE "+table+"(timestamp timestamp, codegsm text, latitude float, longitude float, phone text, PRIMARY KEY((timestamp,latitude,longitude)));")
+    session.execute("CREATE TABLE "+table+"(timestamp timestamp, codegsm text, latitude float, longitude float, phone text, PRIMARY KEY((codegsm),timestamp));")
     print "Table "+table+" created !";
 
 '''
@@ -87,17 +87,18 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     session.default_timeout = 60
     session.default_fetch_size = request_size
     print "size ok"
-    box = boundingBox(radius,lon,lat)
+    #box = boundingBox(radius,lon,lat)
     print "box ok"
-    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where token(timestamp,latitude,longitude)>=token('"+str(dat_inf)+"',"+str(box[0])+","+str(box[2])+") and token(timestamp,latitude,longitude)<token('"+str(dat_sup)+"',"+str(box[1])+","+str(box[3])+") ALLOW FILTERING;")
+    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where timestamp>='"+str(dat_inf)+"' and timestamp<'"+str(dat_sup)+"' allow filtering;")
+    #"+str(box[0])+","+str(box[2])+""+str(box[1])+","+str(box[3])+")
     print "Session ok"
     phonelist = list()
     for i in range(0,len(res_coor)):
 	lat2 = res_coor[i][0]
         lon2 = res_coor[i][1]
-        date = res_coor[i][2]
+        date = res_coor[i]
         phone = str(res_coor[i][3]).split('.')[0]
-        if(haversine(lon,lat,lon2,lat2)<=radius and timestampInterval(date,dat_inf,dat_sup)):
+        if(haversine(lon,lat,lon2,lat2)<=radius):
             phonelist.append((lat2,lon2,date,phone))
     print phonelist[1]
     return phonelist
