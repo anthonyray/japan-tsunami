@@ -15,3 +15,9 @@ python creationProcess.py $1 $2
 
 #python format_csv.py data_1GB.csv 
 python format_csv.py $3
+
+touch cqlcom
+chmod 777 cqlcom
+echo "COPY bigtable (\"timestamp\",codegsm,longitude,latitude,phone) FROM 'extract.csv' WITH HEADER='false' AND DELIMITER=',';" > cqlcom
+cqlsh -k $1 -f cqlcom
+
