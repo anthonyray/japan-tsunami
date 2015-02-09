@@ -54,7 +54,6 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     session.default_timeout = 30
     session.default_fetch_size = request_size
     res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where timestamp>='"+str(dat_inf)+"' and timestamp<'"+str(dat_sup)+"' allow filtering;")
-    print res_coor
     phonelist = list()
     for i in range(0,len(res_coor)):
 	lat2 = res_coor[i][0]
