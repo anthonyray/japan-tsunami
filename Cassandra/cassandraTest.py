@@ -56,13 +56,11 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where timestamp>='"+str(dat_inf)+"' and timestamp<'"+str(dat_sup)+"' allow filtering;")
     phonelist = list()
     for i in range(0,len(res_coor)):
-	lat2 = res_coor[i][0]
-        lon2 = res_coor[i][1]
+	lon2 = res_coor[i][0]
+        lat2 = res_coor[i][1]
         date = res_coor[i]
         phone = str(res_coor[i][3]).split('.')[0]
-        print haversine(lat,lon,lon2,lat2)
         if(haversine(lon,lat,lon2,lat2)<=radius):
-            print 'OKKK'	
             phonelist.append((lat2,lon2,date,phone))
     return phonelist
 
