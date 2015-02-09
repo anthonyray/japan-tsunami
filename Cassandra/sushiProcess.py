@@ -22,13 +22,8 @@ keyspace_t = sys.argv[1]
 
 hop = ca.alertPhones(date_inf_t,date_sup_t,lat_t,lon_t,radius_t,size_req_t,table_t,keyspace_t)
 print hop[0]
-print hop[12]
+print hop[1]
 print "----------------------- "+str(len(hop))+" -----------------------"
-
-print "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-print hop[0:2]
-print "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-
 
 crea_offset = sys.argv[3]
 crea_loop = sys.argv[4]
