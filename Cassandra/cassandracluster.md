@@ -171,7 +171,7 @@ sudo pip install blist
 
 You have to launch the shell process called 'process.sh'. For example : 
 ```
-sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
+sh importData.sh 'japtest' 'bigtable' 'data_1GB.csv'
 ```  
 <table>
 <thead>
@@ -196,16 +196,6 @@ sh process.sh 'japtest' 'bigtable' 'data_1MB.csv' 1000 1000
 	<td> 3 </td>
 	<td> Data file </td>
 	<td> 'data_1GB.csv' </td>
-</tr>
-<tr>
-	<td> 4 </td>
-	<td> Offset </td>
-	<td> 1000 </td>
-</tr>
-<tr>
-	<td> 5 </td>
-	<td> Loop argu </td>
-	<td> 1000 </td>
 </tr>
 </tbody>
 </table> 
