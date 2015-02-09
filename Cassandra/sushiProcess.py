@@ -30,13 +30,13 @@ crea_loop = sys.argv[4]
 offset = int(crea_offset)
 for i in range(0,int(crea_loop)):
     if(i == 0):
-        test = ca.multipleInsertCreation2(data=hop[0:offset],table=str(table_t+'bis'))
+        test = ca.multipleInsertCreation(data=hop[0:offset],table=str(table_t+'bis'))
         ca.multipleInsertExec(keyspace=keyspace_t,cmd=test)
         print "-------------------------------------------------"
     else:
         u = i*offset
         uu = u + offset
-        test = ca.multipleInsertCreation2(data=hop[u:uu],table=str(table_t+'bis'))
+        test = ca.multipleInsertCreation(data=hop[u:uu],table=str(table_t+'bis'))
         ca.multipleInsertExec(keyspace=keyspace_t,cmd=test)
 	print "-------------------------------------------------"
 
