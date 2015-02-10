@@ -14,11 +14,12 @@
 		window.cities = [
 		  {% for city in japancities %}
 		  {
-		    "name": "{{ city[0] }}",
-		    "population": "{{ city[1] }}",
-		    "url": "{{ city[2] }}",
-		    "lat": {{ city[3] }},
-		    "lng": {{ city[4] }}
+		    "id": "{{ city[0] }}",
+				"name": "{{ city[1] }}",
+		    "population": "{{ city[2] }}",
+		    "url": "{{ city[3] }}",
+		    "lat": {{ city[4] }},
+		    "lng": {{ city[5] }}
 		  },
 		  {% endfor %}
 		  {
