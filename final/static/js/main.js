@@ -59,8 +59,15 @@ $(document).ready(function(){
       url: "/tsunami",
       data: data,
       dataType:"json",
-      success: function(data){
-        console.log(data);
+      success: function(points){
+        console.log(points);
+        points.phones.forEach(function(point){
+          L.circle([point[0],point[1]], 500, {
+            color: 'red',
+            fillColor: '#fff',
+            fillOpacity: 0.5
+          }).addTo(map);
+        })
       }
     });
   }

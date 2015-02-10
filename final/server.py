@@ -31,8 +31,8 @@ def index():
 @app.route('/tsunami',methods=["POST"])
 def tsunami():
     # Parsing the request
-    lon = request.form["lon"]
-    lat = request.form["lat"]
+    '''lon = float(request.form["lon"])
+    lat = float(request.form["lat"])
     dat1 = datetime.datetime.strptime(request.form["date"],"%Y-%m-%dT%H:%M")
     dat2 = dat1 + datetime.timedelta(minutes=10)
     radius = 500
@@ -40,9 +40,9 @@ def tsunami():
 
     keyspace = "jap1"
     table = "bigtable"
-    
-    phones = cassandre.alertPhones(dat1,dat2,lat,lon,radius,size_req_t,table,keyspace)
-
+    '''
+    #phones = cassandre.alertPhones(dat1,dat2,lat,lon,radius,size_req_t,table,keyspace)
+    phones = [ [43.52,141.53,"DATE","888","Sap_65"],[35,140,"DATE","888","Sap_65"],[37.52,140.53,"DATE","888","Sap_65"]]
     return jsonify(status="node_down",phones=phones)
 
 app.run()
