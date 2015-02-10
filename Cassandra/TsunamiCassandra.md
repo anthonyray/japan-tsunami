@@ -50,6 +50,12 @@ The project aims to build a tsunami warning system with SMS for japanese people 
 </tbody>
 </table>  
 
+## Installation
+Just install the flask module  
+```
+pip install Flask
+```  
+
 ## Visualization  
 <table>
 <thead>
