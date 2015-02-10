@@ -55,6 +55,7 @@ Just install the flask module
 ```
 pip install Flask
 ```  
+And follow [these](cassandracluster.md) instructions for the cluster configuration
 
 ## Visualization  
 <table>
