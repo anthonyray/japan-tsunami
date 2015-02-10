@@ -17,12 +17,13 @@ class ClusterManager:
 	def __init__(self):
 		print "prout"
 
+
+
 	def get_closet_node(self, lon, lat):
 		lon = float(lon)
 		lat = float(lat)
 		min_v = None 
 		min_d = None
-
 
 		for city in self.nodes_info:
 			d = math.sqrt( (float(city[2])-lon)**2 + (float(city[1]))**2 )
@@ -30,7 +31,12 @@ class ClusterManager:
 				min_v = city
 				min_d = d
 
+		status = node_status(disable)
+		print status
+
 		return min_v
+
+
 
 
 	def node_status(self, status="disable"):
