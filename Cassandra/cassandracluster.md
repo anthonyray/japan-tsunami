@@ -140,6 +140,7 @@ sudo pip install datetime
 sudo pip install math  
 sudo pip install cassandra-driver  
 sudo pip install pandas
+sudo pip install Flask
 sudo apt-get install git
 ```  
 ## Scripts installation
