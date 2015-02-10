@@ -19,7 +19,7 @@ class ClusterManager:
 
 
 
-	def get_closet_node(self, lon, lat):
+	def get_closest_node(self, lon, lat):
 		lon = float(lon)
 		lat = float(lat)
 		min_v = None 
@@ -31,7 +31,7 @@ class ClusterManager:
 				min_v = city
 				min_d = d
 
-		status = node_status(disable)
+		status = self.node_status(disable)
 		print status
 
 		return min_v
