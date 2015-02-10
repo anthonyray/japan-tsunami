@@ -75,6 +75,7 @@ def multipleInsertCreation(data,table="bigtable"):
         phone = data[i][3]
         latitude = data[i][0]
         longitude = data[i][1]
+        codegsm = data[i][4]
         temp = "insert into "+table+"(timestamp,latitude,longitude,phone,codegsm) VALUES('"+str(timestamp)+"',"+str(latitude)+","+str(longitude)+",'"+str(phone)+"','"+str(codegsm)+"')"
         cmd = cmd + " " + temp + " \n "
     return begin + cmd + end
