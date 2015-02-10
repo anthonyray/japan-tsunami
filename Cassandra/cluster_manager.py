@@ -42,12 +42,13 @@ class ClusterManager:
 	def node_status(self, status="disable"):
 		if status == "disable":
 			bashCommand = "nodetool -h 172.31.60.189 disablegossip"
+			print yep
 		else: 
 			bashCommand = "nodetool -h 172.31.60.189 enablegossip"
 
 		process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 		output = process.communicate()[0]
-
+		return output
 
 
 
