@@ -170,7 +170,7 @@ Install the blist library (optimization)
 sudo pip install blist
 ````
 
-You have to launch the shell process called 'process.sh'. For example : 
+You have to launch the shell process called 'importData.sh'. For example : 
 ```
 sh importData.sh 'japtest' 'bigtable' 'data_1GB.csv'
 ```  
@@ -201,7 +201,7 @@ sh importData.sh 'japtest' 'bigtable' 'data_1GB.csv'
 </tbody>
 </table> 
 
-# Alert phones process
+# Test alert phones process
 ```
 python sushiProcess.py 'japjapo' 'bigtable' 1000 1000 36.055 140.061 2015-01-05-10-32 2015-01-10-10-30 500
 ```  
