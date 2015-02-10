@@ -42,7 +42,6 @@ class ClusterManager:
 	def node_status(self, status="disable"):
 		if status == "disable":
 			bashCommand = "nodetool -h 172.31.60.189 disablegossip"
-			print yep
 		else: 
 			bashCommand = "nodetool -h 172.31.60.189 enablegossip"
 
@@ -52,4 +51,8 @@ class ClusterManager:
 
 
 
+
+cm = ClusterManager()
+res = cm.get_closest_node(35.6872, 1136.587)
+print res + "has been killed!"
 
