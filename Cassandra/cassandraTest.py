@@ -61,6 +61,7 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
         date = res_coor[i]
         phone = str(res_coor[i][3])
         if(haversine(lon,lat,lon2,lat2)<=radius):
+            print lat2,lon2,date,phone	
             phonelist.append((lat2,lon2,date,phone))
     return phonelist
 
