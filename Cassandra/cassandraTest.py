@@ -53,16 +53,17 @@ def alertPhones(dat_inf,dat_sup,lat,lon,radius,request_size=100000,table="bigtab
     session = cluster.connect(keyspace)
     session.default_timeout = 30
     session.default_fetch_size = request_size
-    res_coor = session.execute("select latitude,longitude,timestamp,phone from "+table+" where timestamp>='"+str(dat_inf)+"' and timestamp<'"+str(dat_sup)+"' allow filtering;")
+    res_coor = session.execute("select latitude,longitude,timestamp,phone,codegsm from "+table+" where timestamp>='"+str(dat_inf)+"' and timestamp<'"+str(dat_sup)+"' allow filtering;")
     phonelist = list()
     for i in range(0,len(res_coor)):
 	lon2 = res_coor[i][0]
         lat2 = res_coor[i][1]
         date = res_coor[i][2]
         phone = str(res_coor[i][3])
+        codegsm = str(res_coor[i][4])
         if(haversine(lon,lat,lon2,lat2)<=radius):
-            print lat2,lon2,date,phone	
-            phonelist.append((lat2,lon2,date,phone))
+            print lat2,lon2,date,phone,codegsm	
+            phonelist.append((lat2,lon2,date,phone,codegsm))
     return phonelist
 
 def multipleInsertCreation(data,table="bigtable"):
@@ -74,7 +75,7 @@ def multipleInsertCreation(data,table="bigtable"):
         phone = data[i][3]
         latitude = data[i][0]
         longitude = data[i][1]
-        temp = "insert into "+table+"(timestamp,latitude,longitude,phone) VALUES('"+str(timestamp)+"',"+str(latitude)+","+str(longitude)+",'"+str(phone)+"')"
+        temp = "insert into "+table+"(timestamp,latitude,longitude,phone,codegsm) VALUES('"+str(timestamp)+"',"+str(latitude)+","+str(longitude)+",'"+str(phone)+"','"+str(codegsm)+"')"
         cmd = cmd + " " + temp + " \n "
     return begin + cmd + end
 
