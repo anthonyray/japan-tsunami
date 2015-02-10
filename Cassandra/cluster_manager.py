@@ -42,7 +42,7 @@ class ClusterManager:
 	def node_status(self, status="disable"):
 		if status == "disable":
 			bashCommand = "nodetool -h 172.31.60.189 disablegossip"
-			print yep
+			print "yep"
 		else: 
 			bashCommand = "nodetool -h 172.31.60.189 enablegossip"
 
