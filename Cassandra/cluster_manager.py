@@ -31,7 +31,7 @@ class ClusterManager:
 				min_v = city
 				min_d = d
 
-		status = self.node_status(disable)
+		status = self.node_status("disable")
 		print status
 
 		return min_v
