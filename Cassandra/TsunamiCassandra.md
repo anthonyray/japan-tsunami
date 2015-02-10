@@ -58,8 +58,9 @@ Follow this doc: http://www.datastax.com/documentation/cql/3.0/cql/cql_reference
 cqlsh> CREATE KEYSPACE japan_tsunami
 ... WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 5};
 
-
 ```
+
+
 
 ## Visualization  
 <table>
