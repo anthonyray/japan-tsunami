@@ -1,6 +1,8 @@
 Japan Tsunami
 ==================
 
+https://www.youtube.com/watch?v=7cxFSrKmy30
+
 # How to install the cluster
 You can find all the specifications and instructions to build and setup the cluster just [here](Cassandra/cassandracluster.md)
 
